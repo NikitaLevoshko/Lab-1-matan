@@ -1,0 +1,40 @@
+import matplotlib.pyplot as plt
+import numpy as np
+#Введение исходных данных
+print('Введите разбиение n')
+n = int(input())
+print('Введите 1 если оснащение правое')
+print('Введите 0 если оснащение центральное')
+print('Введите -1 если оснащение левое')
+o = int(input())
+#Вычисление интегральной суммы
+if o == 1:
+    integral = (2*n**2+4)/(3*n**2)
+if o == 0:
+    integral = (2*n**2-4)/(3*n**2)
+if o == -1:
+    integral = (2*n**2+4)/(3*n**2)
+print(integral)
+#Построение графика
+x = np.arange(-1, 1, 0.05)
+y = x**2
+q = 0*x
+plt.plot(x, y, color='r', label='x^2') #Строим параболу
+plt.plot(x, q, color='r') #Для нагляжности ось y
+for i in range (n):
+    x = np.arange(-1 + 2 * i / n, -1 + (2 * i + 2) / n, 0.05) #Условие на x для горизонтальных линий
+    if o == 1: #График для правого оснащения
+        plt.vlines(x=-1 + (2 * i+2) / n, ymin=0, ymax=(-1 + (2 * i + 4) / n) ** 2)
+        plt.vlines(x=-1 + 2 * i / n, ymin=0, ymax=(-1 + 2 * i / n) ** 2)
+        y = 0*x+(-1 + (2 * i + 2) / n) ** 2
+    if o == 0: #График для центрального оснащения
+        plt.vlines(x=-1 + 2 * i / n, ymin=0, ymax=(((-1 + (2 * i + 2) / n)+(-1 + 2 * i / n))/2)**2 )
+        plt.vlines(x=-1 + (2 * i + 2)/ n, ymin=0, ymax= (((-1 + (2 * i + 2) / n)+(-1 + 2 * i / n))/2)**2 )
+        y = 0 * x + (((-1 + (2 * i + 2) / n)+(-1 + 2 * i / n))/2)**2
+    if o == -1: #График для левого оснащения
+        plt.vlines(x=-1 + 2 * i / n, ymin=0, ymax=(-1 + 2 * i/ n) ** 2)
+        plt.vlines(x=-1 + 2 * i / n + 2/n, ymin=0, ymax=(-1 + 2 * i / n) ** 2)
+        y = 0*x+(-1 + 2 * i / n) ** 2
+    plt.plot(x, y, color='b')
+plt.title(integral)
+plt.show()
